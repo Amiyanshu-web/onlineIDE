@@ -1,0 +1,9 @@
+.example-number{
+    padding: 1px;
+}
+
+.example-content{
+    padding: 2px;
+    border: 1px solid grey;
+    background-color: rgba(128, 128, 128, 0.059);
+}

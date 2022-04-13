@@ -2,14 +2,13 @@ import React, { Component } from "react";
 
 import "./Complier.css";
 export default class Complier extends Component {
+  
+  
   render() {
-
     return (
       <>
         <div className="container d-flex flex-column bd-highlight mb-3">
-          <div className="progress my-2">
-            <div className="progress-bar bg-success" role="progressbar" style={{ width: "25%" }} aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-          </div>
+
 
           <div className="editor">
             <div className="form-group">
@@ -26,6 +25,11 @@ export default class Complier extends Component {
                 <button className="btn btn-secondary btn-lg btn-sm mx-2" type="submit">Clear</button>
                 <button className="btn btn-secondary btn-lg btn-sm mx-2" type="submit">Run</button>
               </div>
+
+              <div className="progress my-2">
+                <div className="progress-bar bg-success" role="progressbar" style={{ width: "25%"}} aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+
               <textarea className="form-control  fs-6" id="exampleFormControlTextarea1" rows="15">// Write your code here.</textarea>
             </div>
             <div>
