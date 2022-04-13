@@ -3,9 +3,11 @@ import React from 'react'
 function Header() {
   return (
     <div>
-        <h1 className='text-center my-3'>Online IDE</h1>
-        <hr/>
-    </div>
+      <div className='text-center navbar-dark bg-dark text-light' style={{ height:'40%' }}>
+        <h1 className=''>Online IDE</h1>
+      </div >
+
+    </div >
   )
 }
 

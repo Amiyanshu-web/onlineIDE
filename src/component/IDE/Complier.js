@@ -9,6 +9,8 @@ export default class Complier extends Component {
       output: ``,
       language_id: 48,
       userTestCase: ``,
+      progress: "bg-warning",
+      progressPercent: 0,
     };
   }
 
@@ -21,6 +23,11 @@ export default class Complier extends Component {
   clearInput = () => {
     console.log(this.state.inputData);
     this.setState({ inputData: "" });
+    document.getElementById("outputBox").innerHTML = "";
+    this.setState({
+      progress: "bg-warning", progressPercent: 0, userTestCase: ``
+    });
+    document.getElementById("customInput").value = "";
   };
 
   inputCode = (data) => {
@@ -112,7 +119,18 @@ export default class Complier extends Component {
       receivedResult.stderr == null &&
       receivedResult.compile_output == null
     ) {
-      outputText.innerHTML = `Creating Submission... \nSubmission Created ...\nChecking Submission Status!\n`
+      this.setState({
+        progress: "bg-warning", progressPercent: 25
+      });
+      outputText.innerHTML = `Creating Submission...`;
+      this.setState({
+        progress: "bg-warning", progressPercent: 50
+      });
+      outputText.innerHTML += `\nSubmission Created ...`;
+      this.setState({
+        progress: "bg-warning", progressPercent: 75
+      });
+      outputText.innerHTML += `\nChecking Submission Status!\n`
       if (getResponses.token) {
         let url = `https://judge0-ce.p.rapidapi.com/submissions/${getResponses.token}?base64_encoded=true&fields=*`;
 
@@ -128,14 +146,23 @@ export default class Complier extends Component {
     }
     console.log(receivedResult);
     if (receivedResult.stdout) {
-      outputText.innerHTML = `Status : ${receivedResult.status.description}`;
+      this.setState({
+        progress: "bg-success", progressPercent: 100
+      });
+      outputText.innerHTML = `Status: ${receivedResult.status.description}`;
       outputText.innerHTML += `Output: ${receivedResult.stdout}\nExecution Time : ${receivedResult.time} Secs\nMemory used : ${receivedResult.memory} bytes`;
     } else if (receivedResult.stderr) {
-      outputText.innerHTML = `Status : ${receivedResult.status.description}`;
+      this.setState({
+        progress: "bg-danger", progressPercent: 100
+      })
+      outputText.innerHTML = `Status: ${receivedResult.status.description}`;
       outputText.innerHTML += "\nError: ";
       outputText.innerHTML += receivedResult.stderr;
     } else {
-      outputText.innerHTML = `Status : ${receivedResult.status.description}`;
+      this.setState({
+        progress: "bg-danger", progressPercent: 100
+      })
+      outputText.innerHTML = `Status: ${receivedResult.status.description}`;
       outputText.innerHTML += "\nError: ";
       outputText.innerHTML += receivedResult.compile_output;
     }
@@ -165,7 +192,7 @@ export default class Complier extends Component {
               </div>
 
               <div className="progress my-2">
-                <div className="progress-bar bg-success" role="progressbar" style={{ width: "25%" }} aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                <div className={`progress-bar ${this.state.progress}`} role="progressbar" style={{ width: `${this.state.progressPercent}%` }} aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
               </div>
 
               <textarea className="form-control  fs-6" id="exampleFormControlTextarea1" onClick={this.textareaClick} onChange={this.inputCode} rows="15" value={this.state.inputData} />
